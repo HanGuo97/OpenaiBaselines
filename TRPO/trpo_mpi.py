@@ -38,6 +38,17 @@ def learn(env, policy_func,
     # setip losses and stuff
     ob_space = env.observation_space
     ac_space = env.action_space
+    pi = policy_func("pi", ob_space, ac_space)
+    oldpi = policy_func("oldpi", ob_space, ac_space)
+
+    # target advantage function
+    atarg = tf.placeholder(dtype=tf.float32, shape=[None])
+    # empirical return
+    ret = tf.placeholder(dtype=tf.float32, shape=[None])
+
+    ob = U.get_placeholder_cached(name="ob")
+    ac = pi.pdtype.sample_placeholder([None])
+    
 
 
 def main():
